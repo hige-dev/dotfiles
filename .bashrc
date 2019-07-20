@@ -37,8 +37,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-source $HOME/.git-completion.bash
-source $HOME/.git-prompt.sh
 
 # プロンプトに各種情報を表示
 GIT_PS1_SHOWDIRTYSTATE=1
@@ -61,4 +59,5 @@ export PS1='\[\033[1;32m\]\u\[\033[00m\]:\[\033[1;34m\]\w\[\033[1;31m\]$(__git_p
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-source ~/.git-completion.bash
+source $HOME/.git-completion.bash
+source $HOME/.git-prompt.sh
