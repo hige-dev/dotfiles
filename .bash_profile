@@ -38,3 +38,4 @@ GIT_PS1_SHOWSTASHSTATE=1
 
 # Terminal
 export PS1='\[\033[1;32m\]\u\[\033[00m\]:\[\033[1;34m\]\w\[\033[1;31m\]$(__git_ps1)\[\033[00m\] \n \[\033[1;37m\]\d\[\033[00m\] \$ '
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"

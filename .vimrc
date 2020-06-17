@@ -104,6 +104,7 @@ if dein#load_state('~/.cache/dein')
   " Required:
   call dein#end()
   call dein#save_state()
+  call dein#add("ctrlpvim/ctrlp.vim")
 endif
 
 " Required:
@@ -116,3 +117,12 @@ if dein#check_install()
 endif
 
 "End dein Scripts-------------------------
+
+if $TMUX != ""
+  augroup titlesettings
+    autocmd!
+    autocmd BufEnter * call system("tmux rename-window " . "'[vim] " . expand("%:t") . "'")
+    autocmd VimLeave * call system("tmux rename-window zsh")
+    autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
+  augroup END
+endif
