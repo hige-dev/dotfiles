@@ -1,5 +1,4 @@
 set encoding=utf-8
-scriptencoding utf-8
 set fileencoding=utf-8 " 保存時の文字コード
 set fileencodings=ucs-boms,utf-8,euc-jp,cp932 " 読み込み時の文字コードの自動判別. 左側が優先される
 set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先される
@@ -18,6 +17,7 @@ set cursorline
 set mouse=a
 set number
 set noswapfile
+set backspace=indent,eol,start
 syntax on
 colorscheme molokai
 set t_Co=256
@@ -126,3 +126,20 @@ if $TMUX != ""
     autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
   augroup END
 endif
+
+" ファイル名表示
+set statusline=%F
+" 変更チェック表示
+set statusline+=%m
+" 読み込み専用かどうか表示
+set statusline+=%r
+" ヘルプページなら[HELP]と表示
+set statusline+=%h
+" プレビューウインドウなら[Prevew]と表示
+set statusline+=%w
+" これ以降は右寄せ表示
+set statusline+=%=
+" 現在行数/全行数
+set statusline+=[LOW=%l/%L]
+" ステータスラインを常に表示(0:表示しない、1:2つ以上ウィンドウがある時だけ表示)
+set laststatus=2
