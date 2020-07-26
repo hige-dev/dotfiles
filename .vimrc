@@ -116,3 +116,4 @@ if dein#check_install()
 endif
 
 "End dein Scripts-------------------------
+set backspace=indent,eol,start
