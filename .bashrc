@@ -57,6 +57,8 @@ GIT_PS1_SHOWSTASHSTATE=1
 export PS2='\[\033[1;32m\]\u\[\033[00m\]:\[\033[1;34m\]\w\[\033[1;31m\]$(__git_ps1)\[\033[00m\]\n \[\033[1;37m\]\d\[\033[00m\] \$ '
 ##############
 
+alias dc='docker-compose'
+
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 source $HOME/.git-completion.bash
@@ -66,3 +68,4 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+export PATH=$PATH:~/.nodebrew/current/bin/
