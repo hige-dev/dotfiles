@@ -55,7 +55,7 @@ GIT_PS1_SHOWSTASHSTATE=1
 # \] 表示させない文字列の終了
 # \$ $
 export PS1='\[\033[1;32m\]\h\[\033[00m\]:\[\033[1;34m\]\w\[\033[1;31m\]$(__git_ps1)\[\033[00m\]\n \[\033[1;37m\]\d\[\033[00m\] \$ '
-export PS2='>'
+export PS2=' > '
 ##############
 
 alias dc='docker-compose'
@@ -69,6 +69,15 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-export PATH=$PATH:~/.nodebrew/current/bin/
+export PATH=/usr/local/opt/python/libexec/bin:/Users/{user}/.nodebrew/current/bin:$PATH
 
-alias ll='ls -l'
+alias ll='ls -lF'
+alias ls='ls -F'
+## avoid duplicates..
+#export HISTCONTROL=ignoredups:erasedups
+#
+## append history entries..
+#shopt -s histappend
+#
+## After each command, save and reload history
+#export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
