@@ -13,37 +13,18 @@ set incsearch " インクリメンタルサーチ. １文字入力毎に検索�
 set ignorecase " 検索パターンに大文字小文字を区別しない
 set smartcase " 検索パターンに大文字を含んでいたら大文字小文字を区別する
 set hlsearch " 検索結果をハイライト
-set cursorline
 set mouse=a
 set number
 set noswapfile
 set backspace=indent,eol,start
-syntax on
-
-if $TMUX != ""
-  augroup titlesettings
-    autocmd!
-    autocmd BufEnter * call system("tmux rename-window " . "'[vim] " . expand("%:t") . "'")
-    autocmd VimLeave * call system("tmux rename-window zsh")
-    autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
-  augroup END
-endif
-
-" ファイル名表示
-set statusline=%F
-" 変更チェック表示
-set statusline+=%m
-" 読み込み専用かどうか表示
-set statusline+=%r
-" ヘルプページなら[HELP]と表示
-set statusline+=%h
-" プレビューウインドウなら[Prevew]と表示
-set statusline+=%w
-" これ以降は右寄せ表示
-set statusline+=%=
-" 現在行数/全行数
-set statusline+=[LOW=%l/%L]
-" ステータスラインを常に表示(0:表示しない、1:2つ以上ウィンドウがある時だけ表示)
-set laststatus=2
-let g:TerminusFocusReporting=0
+set statusline=%F " ファイル名表示
+set statusline+=%m " 変更チェック表示
+set statusline+=%r " 読み込み専用かどうか表示
+set statusline+=%h " ヘルプページなら[HELP]と表示
+set statusline+=%w " プレビューウインドウなら[Prevew]と表示
+set statusline+=%= " これ以降は右寄せ表示
+set statusline+=[LOW=%l/%L] " 現在行数/全行数
+set laststatus=2 " ステータスラインを常に表示(0:表示しない、1:2つ以上ウィンドウがある時だけ表示)
 nnoremap ^] <Nop>
+set clipboard+=unnamed
+
