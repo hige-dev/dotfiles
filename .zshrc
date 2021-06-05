@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/usr0101677/.oh-my-zsh"
+export ZSH="${HOME}/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -116,3 +116,20 @@ if [ "$TERM" != "linux" ]; then
 fi
 
 alias ll='ls -laF'
+alias dc='docker-compose'
+
+
+function aws_mfa() {
+  if [ $# != 1 ]; then
+    echo "profileを指定してください"
+    return
+  fi
+  unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+  printf '%s ' 'MFAトークン: '
+  read token
+  eval `aws sts get-session-token --profile $1 \
+          --serial-number $(aws sts get-caller-identity --profile $1 --query Arn --output text | sed 's/:user/:mfa/') \
+          --token-code ${token} \
+          --duration-seconds 129600 \
+        | awk ' $1 == ""AccessKeyId":" { gsub(/"/,""); gsub(/,/,""); print "export AWS_ACCESS_KEY_ID="$2 } $1 == ""SecretAccessKey":" { gsub(/"/,""); gsub(/,/,""); print "export AWS_SECRET_ACCESS_KEY="$2} $1 == ""SessionToken":" { gsub(/"/,""); gsub(/,/,""); print "export AWS_SESSION_TOKEN="$2 } '`
+}
