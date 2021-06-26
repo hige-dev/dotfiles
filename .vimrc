@@ -1,6 +1,18 @@
-call plug#begin()
+call plug#begin("~/.vim/plugged")
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'Shougo/unite.vim' " :Unite colorschme -auto-preview
+Plug 'ujihisa/unite-colorscheme'
+Plug 'tomasr/molokai', {'do': 'cp colors/* ~/.vim/colors'}
+Plug 'skanehira/translate.vim' " :Translate
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
+
+" git clone https://github.com/ctrlpvim/ctrlp.vim ~/.vim/bundle/ctrlp.vim
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+colorscheme molokai
+let g:airline_solarized_bg='dark'
 
 set encoding=utf-8
 set fileencoding=utf-8 " 保存時の文字コード
@@ -17,8 +29,12 @@ set incsearch " インクリメンタルサーチ. １文字入力毎に検索�
 set ignorecase " 検索パターンに大文字小文字を区別しない
 set smartcase " 検索パターンに大文字を含んでいたら大文字小文字を区別する
 set hlsearch " 検索結果をハイライト
+set cursorline " カーソルラインをハイライト
+set showmatch " 括弧の対応関係を一瞬表示する
 set mouse=a
-set number
+set nonu
+set wildmenu " コマンドモードの補完
+set history=5000 " 保存するコマンド履歴の数
 set noswapfile
 set backspace=indent,eol,start
 set statusline=%F " ファイル名表示
