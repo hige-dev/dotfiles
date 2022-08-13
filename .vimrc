@@ -1,21 +1,26 @@
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
 call plug#begin("~/.vim/plugged")
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'Shougo/unite.vim' " :Unite colorschme -auto-preview
 Plug 'ujihisa/unite-colorscheme'
-Plug 'tomasr/molokai', {'do': 'cp colors/* ~/.vim/colors'}
 Plug 'skanehira/translate.vim' " :Translate
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call plug#end()
 
-" git clone https://github.com/ctrlpvim/ctrlp.vim ~/.vim/bundle/ctrlp.vim
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-
-colorscheme molokai
-let g:airline_solarized_bg='dark'
-
 set encoding=utf-8
-set fileencoding=utf-8 " 保存時の文字コード
 set fileencodings=ucs-boms,utf-8,euc-jp,cp932 " 読み込み時の文字コードの自動判別. 左側が優先される
 set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先される
 set ambiwidth=double " □や○文字が崩れる問題を解決
