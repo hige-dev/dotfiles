@@ -116,7 +116,7 @@ if [ "$TERM" != "linux" ]; then
 fi
 
 alias ll='ls -laF'
-alias dc='docker-compose'
+alias dc='docker compose'
 
 
 function aws_mfa() {
