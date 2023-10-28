@@ -133,3 +133,12 @@ function aws_mfa() {
           --duration-seconds 129600 \
         | awk ' $1 == ""AccessKeyId":" { gsub(/"/,""); gsub(/,/,""); print "export AWS_ACCESS_KEY_ID="$2 } $1 == ""SecretAccessKey":" { gsub(/"/,""); gsub(/,/,""); print "export AWS_SECRET_ACCESS_KEY="$2} $1 == ""SessionToken":" { gsub(/"/,""); gsub(/,/,""); print "export AWS_SESSION_TOKEN="$2 } '`
 }
+
+tks() {
+  read "yn?tmux kill-server? [y/N] "
+  if [ "${yn}" = "y" ]; then
+    tmux kill-server
+  else
+    echo 'abort'
+  fi
+}
