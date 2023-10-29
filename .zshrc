@@ -142,3 +142,22 @@ tks() {
     echo 'abort'
   fi
 }
+
+activate() {
+  local VENV=${1:-venv}
+  local FIND_DIR='./'
+  while true; do
+    # venvがあればactivate、なければ上の改装を探し、rootまでいったら停止
+    find ${FIND_DIR} -maxdepth 1 -type d -name ${VENV} | grep -q .
+    if [ $? -eq 0 ]; then
+      source ${FIND_DIR}venv/bin/activate
+      break
+    else
+      FIND_DIR="${FIND_DIR}../"
+      if [ $(eval "echo $(cd ${FIND_DIR}; pwd)") = '/' ]; then
+        echo "no venv directory found."
+        break
+      fi
+    fi
+  done
+}
