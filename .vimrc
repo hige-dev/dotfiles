@@ -53,3 +53,8 @@ set laststatus=2 " ステータスラインを常に表示(0:表示しない、1
 nnoremap ^] <Nop>
 set clipboard+=unnamed
 
+function! s:www(word) abort
+  execute('term ++close ++shell w3m google.com/search\?q="' . a:word . '"')
+endfunction
+
+command! -nargs=1 WWW call s:www(<f-args>)
