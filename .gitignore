@@ -1,0 +1,8 @@
+codex/local.toml
+zsh/local.zsh
+.env*
+.DS_Store
+auth.json
+*.sqlite*
+history.jsonl
+.zsh_history

@@ -1,0 +1,4 @@
+.oh-my-zsh https://github.com/ohmyzsh/ohmyzsh.git be8da5c77192eb3da3699ea7c5e47bdfaa5eea4e
+.oh-my-zsh/custom/plugins/zsh-autosuggestions https://github.com/zsh-users/zsh-autosuggestions.git 85919cd1ffa7d2d5412f6d3fe437ebdbeeec4fc5
+.oh-my-zsh/custom/plugins/zsh-completions https://github.com/zsh-users/zsh-completions.git de02bb84ab0af51e328c6ae85ab5555397c31277
+.oh-my-zsh/custom/themes/powerlevel10k https://github.com/romkatv/powerlevel10k.git d05a1b00f9a61f9578bf9dc19b8451942dde8734

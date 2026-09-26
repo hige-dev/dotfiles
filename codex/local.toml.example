@@ -1,0 +1,4 @@
+# 端末固有の設定。local.toml にコピーして編集する。
+# 共通 config.toml にあるテーブルを重複定義しないこと。
+# [projects."/端末固有の作業ディレクトリ"]
+# trust_level = "trusted"
