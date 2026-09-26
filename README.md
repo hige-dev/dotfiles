@@ -25,7 +25,7 @@ SSH 鍵が未設定の環境では GitHub の HTTPS URL でも取得できます
 
 macOS では Homebrew がなければ公式インストーラーを起動します。途中で権限確認や開発ツールの導入が必要になる場合があります。Ubuntu / Debian では apt 用の sudo 権限が必要です。いずれもネット接続が必要です。
 
-Oh My Zsh・Powerlevel10k・入力候補・補完は `repositories.txt` の Git リビジョンで導入します。mise、Node.js、Codex、interview-dev-loop の版は `versions.sh` に固定しています。既存の zsh 拡張が別のリビジョンの場合は、勝手に切り替えず停止します。必要ならそのディレクトリを退避して再実行してください。
+Oh My Zsh・Powerlevel10k・入力候補・補完は `repositories.txt` の Git リビジョンで導入します。mise、Node.js、interview-dev-loop の版は `versions.sh` に固定しています。Codex CLI は未導入の場合だけ公式インストーラーの最新安定版を導入し、その後の更新は起動時の自動更新に任せます。既存の zsh 拡張が別のリビジョンの場合は、勝手に切り替えず停止します。必要ならそのディレクトリを退避して再実行してください。
 
 tmux と基本ツールは OS のパッケージを使い、版は固定しません。tmux の設定は 3.6 で検証しています。Linux のシステムクリップボードが必要なら、Wayland では wl-clipboard、X11 では xclip を別途導入してください。
 
@@ -48,6 +48,8 @@ Powerlevel10k の現在の設定を保存しています。端末アプリのフ
 ## Codex と端末固有の設定
 
 共通の設定は `codex/config.toml`、作業ルールは `codex/AGENTS.md` です。通常表示を使い、`Alt-r` または `/raw` でコピー向けの raw 表示へ切り替えられます。
+
+Codex CLI の更新後、再起動したセッションの開始時に前回と異なる版を検出し、公式変更履歴に具体的な内容があれば、現在の設定に関係する変更点と使いどころを日本語で案内します。詳しい変更点がある更新では Codex CLI を一度呼び出して要約を作ります。変更履歴が取得できない場合や詳細がない場合は推測せず、その旨を表示します。案内処理は非同期で、起動を待たせません。初回は現在の版を `~/.local/state/codex-update-summary/last-version` に記録し（`XDG_STATE_HOME` が設定されている場合はその配下）、版番号や更新履歴は Git に保存しません。
 
 端末固有のプロジェクト信頼設定などは、`codex/local.toml.example` を `codex/local.toml` にコピーして記述します。共通設定の後ろに追記して配置します。共通設定と同じキーやテーブルを重複定義しないでください。Bash では TOML の解析・検証や既存設定の自動取り込みは行いません。
 

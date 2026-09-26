@@ -8,6 +8,15 @@ fullscreen_transcript = true
 status_line = ["model-with-reasoning", "project-name", "git-branch", "context-remaining", "five-hour-limit", "weekly-limit"]
 screen_reader_detection_done = true
 
+[[hooks.SessionStart]]
+matcher = "startup|resume"
+
+[[hooks.SessionStart.hooks]]
+type = "command"
+command = 'bash "$HOME/.local/bin/codex-update-summary"'
+async = true
+timeout = 90
+
 [[hooks.PermissionRequest]]
 matcher = ".*"
 

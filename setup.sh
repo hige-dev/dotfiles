@@ -26,7 +26,7 @@ if ! $configs_only && [[ "$target_home" != "$HOME" ]]; then
   exit 1
 fi
 # 配置先の衝突は、依存関係導入やファイル配置を始める前に確認する
-for relative_path in .tmux.conf .zshrc .p10k.zsh .codex/AGENTS.md .codex/config.toml .local/bin/agent-notify.sh .local/bin/tmux-copy.sh; do
+for relative_path in .tmux.conf .zshrc .p10k.zsh .codex/AGENTS.md .codex/config.toml .local/bin/codex .local/bin/codex-update-summary .local/bin/agent-notify.sh .local/bin/tmux-copy.sh .local/share/dotfiles/codex-update-summary.mjs; do
   if [[ -d "$target_home/$relative_path" && ! -L "$target_home/$relative_path" ]]; then
     printf '配置先がディレクトリです: %s\n' "$target_home/$relative_path" >&2
     exit 1
@@ -115,7 +115,16 @@ install_dependencies() {
     MISE_VERSION="v$MISE_VERSION_PIN" MISE_INSTALL_PATH="$mise" sh "$staging_dir/mise-install.sh"
   fi
   "$mise" install "node@$NODE_VERSION_PIN"
-  "$mise" exec "node@$NODE_VERSION_PIN" -- npm install --global --prefix "$target_home/.local/share/dotfiles/npm" "@openai/codex@$CODEX_VERSION_PIN"
+  local codex_bin="$target_home/.local/bin/codex" install_codex=false
+  if [[ ! -x "$codex_bin" ]]; then
+    install_codex=true
+  elif [[ -f "$codex_bin" && ! -L "$codex_bin" ]] && grep -Fq '/.local/share/dotfiles/npm/bin/codex' "$codex_bin"; then
+    install_codex=true
+  fi
+  if $install_codex; then
+    curl -fsSL https://chatgpt.com/codex/install.sh -o "$staging_dir/codex-install.sh"
+    HOME="$target_home" CODEX_NON_INTERACTIVE=1 sh "$staging_dir/codex-install.sh"
+  fi
 }
 
 if ! $dry_run; then
@@ -128,6 +137,7 @@ place "$dotfiles_dir/zsh/p10k.zsh" .p10k.zsh 644
 place "$dotfiles_dir/codex/AGENTS.md" .codex/AGENTS.md 644
 place "$dotfiles_dir/scripts/agent-notify.sh" .local/bin/agent-notify.sh 755
 place "$dotfiles_dir/scripts/tmux-copy.sh" .local/bin/tmux-copy.sh 755
+place "$dotfiles_dir/scripts/codex-update-summary.mjs" .local/share/dotfiles/codex-update-summary.mjs 644
 if $dry_run; then
   place "$dotfiles_dir/codex/config.toml" .codex/config.toml 600
 else
@@ -143,12 +153,16 @@ if [[ -f "$dotfiles_dir/zsh/local.zsh" ]]; then
 fi
 if ! $configs_only; then
   if $dry_run; then
-    printf '%s\n' '導入予定: OS の基本ツール、固定版の zsh 拡張・mise・Node.js・Codex・interview-dev-loop'
+    printf '%s\n' '導入予定: OS の基本ツール、固定版の zsh 拡張・mise・Node.js、未導入なら Codex CLI の最新安定版、interview-dev-loop'
   else
-    sed "s/__NODE_VERSION__/$NODE_VERSION_PIN/g" "$dotfiles_dir/scripts/codex.sh" > "$staging_dir/codex"
-    place "$staging_dir/codex" .local/bin/codex 755
     "$target_home/.local/bin/codex" plugin marketplace add "$MARKETPLACE_SOURCE" --ref "$MARKETPLACE_REVISION"
     "$target_home/.local/bin/codex" plugin add "$PLUGIN_NAME"
   fi
+fi
+if $dry_run; then
+  printf '配置予定: %s\n' "$target_home/.local/bin/codex-update-summary"
+else
+  sed "s/__NODE_VERSION__/$NODE_VERSION_PIN/g" "$dotfiles_dir/scripts/codex-update-summary.sh" > "$staging_dir/codex-update-summary"
+  place "$staging_dir/codex-update-summary" .local/bin/codex-update-summary 755
 fi
 printf '%s\n' '完了しました。新しい zsh を開いてください。Codex のログインとフックの信頼確認は端末ごとに行います。'

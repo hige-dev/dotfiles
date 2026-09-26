@@ -11,6 +11,7 @@ trap cleanup EXIT
 for file in "$root/setup.sh" "$root/versions.sh" "$root"/scripts/*.sh "$root/tests/check.sh"; do
   bash -n "$file"
 done
+node "$root/tests/codex-update-summary.test.mjs"
 zsh -n "$root/zsh/zshrc"
 zsh -n "$root/zsh/p10k.zsh"
 home_dir="$test_dir/空白 のあるホーム"
@@ -24,6 +25,9 @@ bash "$root/setup.sh" --configs-only --target-home "$home_dir" --dry-run >/dev/n
 bash "$root/setup.sh" --configs-only --target-home "$home_dir" >/dev/null
 cmp "$root/tmux/tmux.conf" "$home_dir/.tmux.conf"
 cmp "$root/codex/config.toml" "$home_dir/.codex/config.toml"
+cmp "$root/scripts/codex-update-summary.mjs" "$home_dir/.local/share/dotfiles/codex-update-summary.mjs"
+bash -n "$home_dir/.local/bin/codex-update-summary"
+grep -Fq 'node@24.21.0' "$home_dir/.local/bin/codex-update-summary"
 [[ "$(cat "$home_dir/.codex/auth.json")" == '認証情報は変更しない' ]]
 [[ "$(cat "$test_dir/original")" == '元のリンク先' ]]
 backups=("$home_dir/.local/state/dotfiles/backups/"*)
