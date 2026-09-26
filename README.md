@@ -17,7 +17,7 @@ SSH 鍵が未設定の環境では GitHub の HTTPS URL でも取得できます
 
 セットアップは OS を判定します。
 
-| 環境 | 基本ツール | コピー | 確認待ち通知 |
+| 環境 | 基本ツール | コピー用補助コマンド | 確認待ち通知 |
 | --- | --- | --- | --- |
 | Ubuntu / Debian | apt | wl-copy / xclip（導入済みの場合） | notify-send |
 | WSL | apt | clip.exe | Windows PowerShell |
@@ -28,6 +28,8 @@ macOS では Homebrew がなければ公式インストーラーを起動しま�
 Oh My Zsh・Powerlevel10k・入力候補・補完は `repositories.txt` の Git リビジョンで導入します。mise、Node.js、Codex、interview-dev-loop の版は `versions.sh` に固定しています。既存の zsh 拡張が別のリビジョンの場合は、勝手に切り替えず停止します。必要ならそのディレクトリを退避して再実行してください。
 
 tmux と基本ツールは OS のパッケージを使い、版は固定しません。tmux の設定は 3.6 で検証しています。Linux のシステムクリップボードが必要なら、Wayland では wl-clipboard、X11 では xclip を別途導入してください。
+
+tmux と Codex などのアプリからのコピーは、端末のクリップボード連携（OSC 52）を使います。tmux 自身のドラッグ選択はコピー後にコピーモードを終了します。Windows Terminal では `Ctrl+Shift+V` で現在のクリップボードを貼り付けられます。上表の補助コマンドは `scripts/tmux-copy.sh` で直接コピーする場合に使用します。
 
 ## 設定の配置と更新
 
